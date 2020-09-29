@@ -2,11 +2,11 @@ const core = require("@actions/core");
 const github = require("@actions/github");
 const axios = require('axios');
 
-const waitForUrl = async (url, MAX_TIMEOUT) => {
+const waitForUrl = async (url, MAX_TIMEOUT, { headers }) => {
     const iterations = MAX_TIMEOUT / 2;
     for (let i = 0; i < iterations; i++) {
         try {
-            await axios.get(url);
+            await axios.get(url, { headers });
             return;
         } catch (e) {
             console.log("Url unavailable, retrying...");
@@ -110,10 +110,14 @@ const run = async () => {
 
         // Set output
         core.setOutput('url', targetUrl);
+        const extraHeaders = core.getInput("request_headers");
+        const headers = !extraHeaders ? {} : JSON.parse(extraHeaders)
 
         // Wait for url to respond with a sucess
         console.log(`Waiting for a status code 200 from: ${targetUrl}`);
-        await waitForUrl(targetUrl, MAX_TIMEOUT);
+        await waitForUrl(targetUrl, MAX_TIMEOUT, {
+            headers,
+          });
 
     } catch (error) {
         core.setFailed(error.message);

@@ -14,6 +14,10 @@ The github secret `${{ secrets.GITHUB_TOKEN }}`
 
 Optional — The amount of time to spend waiting on Vercel. Defaults to `60` seconds
 
+### `request_headers`
+
+Optional — Stringified HTTP Header object key/value pairs to send in requests (eg. `'{ "Authorization": "Basic YWxhZGRpbjpvcGVuc2VzYW1l }'`)
+
 ## Outputs
 
 ### `url`
