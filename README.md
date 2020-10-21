@@ -18,6 +18,10 @@ Optional — The amount of time to spend waiting on Vercel. Defaults to `60` sec
 
 Optional — Stringified HTTP Header object key/value pairs to send in requests (eg. `'{ "Authorization": "Basic YWxhZGRpbjpvcGVuc2VzYW1l }'`)
 
+### `environement`
+
+Optional — To be used to filter specify which environement to test if you have more than one. The environement name can be found in Vercel admin (eg. `'name-of-the-project'`).
+
 ## Outputs
 
 ### `url`

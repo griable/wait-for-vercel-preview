@@ -10,6 +10,9 @@ inputs:
   request_headers:
     description: "Stringified HTTP Header object key/value pairs to send in requests"
     required: false
+  environment:
+    description: "Optional — To be used to filter specify which environement to test if you have more than one. The environement name can be found in Vercel admin (eg. `'name-of-the-project'`)."
+    required: false
   max_timeout:
     description: "The max time to run the action"
     required: false

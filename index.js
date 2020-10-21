@@ -94,9 +94,18 @@ const run = async () => {
             sha: prSHA
         })
 
-        console.log(JSON.stringify(deployments))
-
-        const deployment = deployments.data.length > 0 && deployments.data[0];
+        const environment = core.getInput("environment");
+        let deployment
+        if (deployments.data.length > 0) {
+            if (!!environment) {
+                deployment = deployments.data.find(data => data.environment === `Preview – ${environment}`);
+            } else {
+                deployment = deployments.data.length > 0 && deployments.data[0];
+            }
+        }
+        if (typeof deployment === "undefined") {
+            throw "No deployment found"
+        }
 
         const status = await waitForStatus({ 
             owner,
