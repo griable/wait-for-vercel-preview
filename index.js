@@ -34,6 +34,7 @@ const waitForStatus = async ({ token, owner, repo, deployment_id }, MAX_TIMEOUT)
             if (statuses.data.length > 0) {
                 if (!!environment) {
                     status = statuses.data.find(data => data.environment === `Preview – ${environment}`);
+                    console.log('found', status.state)
                 } else {
                     status = statuses.data.length > 0 && statuses.data[0];
                 }
@@ -55,13 +56,6 @@ const waitForStatus = async ({ token, owner, repo, deployment_id }, MAX_TIMEOUT)
             await new Promise(r => setTimeout(r, 2000));
         }
     }
-    const statuses = await octokit.repos.listDeploymentStatuses({
-        owner,
-        repo,
-        deployment_id
-    })
-
-    console.log(JSON.stringify(statuses))
     core.setFailed(`Timeout reached: Unable to wait for an deployment to be successful`);
 }
 
