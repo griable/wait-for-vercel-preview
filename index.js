@@ -55,6 +55,13 @@ const waitForStatus = async ({ token, owner, repo, deployment_id }, MAX_TIMEOUT)
             await new Promise(r => setTimeout(r, 2000));
         }
     }
+    const statuses = await octokit.repos.listDeploymentStatuses({
+        owner,
+        repo,
+        deployment_id
+    })
+
+    console.log(JSON.stringify(statuses))
     core.setFailed(`Timeout reached: Unable to wait for an deployment to be successful`);
 }
 
