@@ -94,6 +94,8 @@ const run = async () => {
             sha: prSHA
         })
 
+        console.log(JSON.stringify(deployments))
+
         const deployment = deployments.data.length > 0 && deployments.data[0];
 
         const status = await waitForStatus({ 
