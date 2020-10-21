@@ -29,7 +29,15 @@ const waitForStatus = async ({ token, owner, repo, deployment_id }, MAX_TIMEOUT)
                 deployment_id
             })
 
-            const status = statuses.data.length > 0 && statuses.data[0];
+            const environment = core.getInput("environment");
+            let status
+            if (statuses.data.length > 0) {
+                if (!!environment) {
+                    status = statuses.data.find(data => data.environment === `Preview – ${environment}`);
+                } else {
+                    status = statuses.data.length > 0 && statuses.data[0];
+                }
+            }
 
             if ( !status ) {
                 throw Error('No status was available')
